@@ -47,7 +47,7 @@ module.exports = {
 
                 const theEmbed1 = new MessageEmbed()
                 .setColor('YELLOW')
-                .setURL(response.data.deals_results[0].link)
+                .setURL(response.data.deals_results[1].link)
                 .setTitle('Lightning Deals On Amazon')
                 .setThumbnail(response.data.deals_results[1].image)
                 .addFields(
@@ -62,7 +62,7 @@ module.exports = {
 
                 const theEmbed2 = new MessageEmbed()
                 .setColor('YELLOW')
-                .setURL(response.data.deals_results[0].link)
+                .setURL(response.data.deals_results[2].link)
                 .setTitle('Lightning Deals On Amazon')
                 .setThumbnail(response.data.deals_results[2].image)
                 .addFields(
@@ -78,7 +78,7 @@ module.exports = {
 
                 const theEmbed3 = new MessageEmbed()
                 .setColor('YELLOW')
-                .setURL(response.data.deals_results[0].link)
+                .setURL(response.data.deals_results[3].link)
                 .setTitle('Lightning Deals On Amazon')
                 .setThumbnail(response.data.deals_results[3].image)
                 .addFields(
