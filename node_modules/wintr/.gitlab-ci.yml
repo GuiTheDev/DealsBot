@@ -1,0 +1,46 @@
+image: node:12
+
+variables:
+  COVERALLS_SERVICE_NAME: "gitlab-ci"
+
+stages:
+  - build
+  - test
+  - coverage
+  - release
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - npm i --silent
+  artifacts:
+    paths:
+      - node_modules/
+
+test:
+  stage: test
+  script:
+    - npm run test
+
+coverage:
+  stage: coverage
+  only:
+    - master
+  before_script:
+    - npm install -g coveralls
+  script:
+    - npm run coverage
+    - npm run coveralls
+
+release:
+  stage: release
+  only:
+    - master
+  before_script:
+    - npm install -g semantic-release @semantic-release/gitlab-config @semantic-release/npm
+  script:
+    - npm run release

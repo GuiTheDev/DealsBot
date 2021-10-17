@@ -1,0 +1,209 @@
+<% const pageTitle = 'WintrAmazonScraper tester' -%>
+<%
+// noinspection SpellCheckingInspection
+const categories = {
+    SPORTING_GOODS: {slug: 'sporting-goods', id: '2811119011'},
+    PALETTE_KNIVES: {slug: 'arts-crafts', id: '12897951'},
+    COFFEE_MACHINE_CLEANING_PRODUCTS: {slug: 'home-garden', id: '3115626011'},
+    COFFEE_MACHINE_ACCESSORIES: {slug: 'home-garden', id: '289743'},
+    ADAPTERS: {slug: 'electronics', id: '3117831011'},
+    LENSES: {slug: 'electronics', id: '3117833011'},
+    INTERCONNECT_CABLES: {slug: 'automotive', id: '10981531'},
+    PRINTERS: {slug: 'office-products', id: '172635'},
+    PRINTER_PARTS_AND_ACCESSORIES: {slug: 'OfficeProducts', id: '172636'},
+    TANNING_OILS: {slug: 'beauty', id: '11062731'},
+    DOWN_AND_DOWN_ALTERNATIVE: {slug: 'fashion', id: '2348894011'},
+    PARKAS: {slug: 'fashion', id: '12643251011'},
+    ACTIVE_AND_PERFORMANCE: {slug: 'fashion', id: '2348893011'},
+    JEWELRY_BOXES_AND_ORGANIZERS: {slug: 'handmade', id: '11435544011'},
+    FLASHING: {slug: 'tools', id: '13398821'},
+    GUTTERS: {slug: 'tools', id: '13398831'},
+    ROBES: {slug: 'fashion-boys', id: '1046026'},
+    WATERCOLOR_PAINT: {slug: 'toys', id: '2488755011'},
+    JEANS: {slug: 'baby', id: '2475828011'},
+    LEGGINGS: {slug: 'baby', id: '10932935011'},
+    FEMININE_WASHES: {slug: 'health-personal-care', id: '13226755011'},
+    DJ_HEADPHONES: {slug: 'musical-instruments', id: '5524096011'},
+    FRUIT_AND_NUT: {slug: 'grocery', id: '11437474011'},
+    NIBS: {slug: 'arts-crafts', id: '8090748011'},
+    LIGHT_BOXES: {slug: 'arts-crafts', id: '12896801'},
+    BULLET_CAMERAS: {slug: 'electronics', id: '14241331'},
+    DOME_CAMERAS: {slug: 'electronics', id: '14241151'},
+    LENS_MOUNT_RINGS: {slug: 'electronics', id: '3190374011'},
+    ACCESS_CONTROL_KEYPADS: {slug: 'electronics', id: '11041131'},
+    IR_ILLUMINATORS: {slug: 'electronics', id: '7161095011'},
+    CONSOMME: {slug: 'grocery', id: '724736011'},
+    DUVET_COVERS: {slug: 'home-garden', id: '362536011'},
+    DUVET_COVER_SETS: {slug: 'home-garden', id: '10671056011'},
+    SHOEGAZING: {slug: 'music', id: '602094'},
+    SNACK_GIFTS: {slug: 'grocery', id: '2255582011'},
+    POWDER: {slug: 'beauty', id: '11058971'},
+    PHOTOGRAPHY: {slug: 'mobile-apps', id: '2478860011'},
+    SOAP_AND_SHAMPOO: {slug: 'beauty', id: '388109011'},
+    PAPER_CRAFT: {slug: 'toys', id: '166070011'},
+    JAMMERS: {slug: 'sporting-goods', id: '2371137011'},
+    CUFFLINKS: {slug: 'handmade', id: '11435870011'},
+    TIE_CLIPS: {slug: 'handmade', id: '11435872011'}
+}
+-%>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--suppress SpellCheckingInspection -->
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" type="text/css">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <title><%= pageTitle %></title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function handleFormSelection(id) {
+            document.querySelectorAll('form').forEach(f => f.classList.add('hidden'));
+
+            if (!id || !id.length) {
+                return;
+            }
+            document.getElementById(`${id}Form`).classList.remove('hidden')
+        }
+    </script>
+</head>
+<body>
+
+<h1><%= pageTitle %></h1>
+<p>Project hosted <a href="https://github.com/121593/wintr-amazon-scraper">@github</a></p>
+
+<label>
+    What type of page would you like to scrap ?
+    <select name="targetType" oninput="handleFormSelection(event.target.value)">
+        <option value="" selected>Choose</option>
+        <option value="product">Product</option>
+        <option value="search">Search</option>
+        <option value="category">Category</option>
+        <option value="bestSellers">Category BestSellers</option>
+    </select>
+</label>
+
+<!--suppress HtmlUnknownTarget -->
+<form action="/parseSearch" method="post" id="searchForm" class="hidden">
+    <% // noinspection NodeModulesDependencies
+    if (typeof error !== 'undefined' && error) { %>
+        <p style="color: darkred"><%= error %></p>
+    <% } -%>
+
+    <fieldset>
+        <legend>Parse product search page</legend>
+
+        <div style="display: flex;gap: 1em;">
+            <%- include('apiKeyFormBlock') %>
+            <%- include('countryCodeFormBlock') %>
+        </div>
+
+        <label>
+            Search term
+            <input type="text" name="searchTerm" placeholder="something" required/>
+        </label>
+        <label>
+            Category "rh"
+            <input type="text" name="rh" placeholder="optional"/>
+        </label>
+
+        <button type="submit">parse</button>
+    </fieldset>
+</form>
+
+<!--suppress HtmlUnknownTarget -->
+<form action="/parseProduct" method="post" class="hidden" id="productForm">
+
+    <% // noinspection NodeModulesDependencies
+    if (typeof error !== 'undefined' && error) { %>
+        <p style="color: darkred"><%= error %></p>
+    <% } -%>
+
+    <fieldset>
+        <legend>Parse product page</legend>
+        <div style="display: flex;gap: 1em;">
+            <%- include('apiKeyFormBlock') %>
+            <%- include('countryCodeFormBlock') %>
+        </div>
+
+        <label>
+            Product ID
+            <input type="text" name="productId" placeholder="abc"/>
+        </label>
+        <button type="submit">parse</button>
+    </fieldset>
+</form>
+
+<!--suppress HtmlUnknownTarget -->
+<form action="/parseNode" method="post" class="hidden" id="categoryForm">
+
+    <% // noinspection NodeModulesDependencies
+    if (typeof error !== 'undefined' && error) { %>
+        <p style="color: darkred"><%= error %></p>
+    <% } -%>
+
+    <fieldset>
+        <legend>Parse category page</legend>
+
+        <div style="display: flex;gap: 1em;">
+            <%- include('apiKeyFormBlock') %>
+            <%- include('countryCodeFormBlock') %>
+        </div>
+
+        <label>
+            Node
+            <select name="nodeId">
+                <% for(let catName in categories) { %>
+                    <option value="<%= categories[catName].id %>"><%= catName %></option>
+                <% } %>
+            </select>
+        </label>
+        <button type="submit">parse</button>
+    </fieldset>
+</form>
+
+<!--suppress HtmlUnknownTarget -->
+<form action="/parseNodeBestSellers" method="post" class="hidden" id="bestSellersForm">
+
+    <% // noinspection NodeModulesDependencies
+    if (typeof error !== 'undefined' && error) { %>
+        <p style="color: darkred"><%= error %></p>
+    <% } -%>
+
+    <fieldset>
+        <legend>Parse category bestsellers page</legend>
+
+        <div style="display: flex;gap: 1em;">
+            <%- include('apiKeyFormBlock') %>
+            <%- include('countryCodeFormBlock') %>
+        </div>
+
+        <label>
+            Node
+            <select name="nodeSlug">
+                <% for(let catName in categories) { %>
+                    <option value="<%= categories[catName].slug %>"><%= catName %></option>
+                <% } %>
+            </select>
+        </label>
+        <button type="submit">parse</button>
+    </fieldset>
+</form>
+
+<% if (typeof result !== 'undefined' && result) { %>
+    <hr/>
+    <div style="max-width: 100%;">
+        <%- include('objectTable', {object: result, caption: 'Results'}); %>
+    </div>
+<% } %>
+
+<footer style="padding-top: 3em">
+    using <a href="https://oxal.org/projects/sakura/">sakura css theme</a>
+</footer>
+
+</body>
+</html>

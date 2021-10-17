@@ -1,0 +1,18 @@
+{
+  "articles": [
+    {
+      "title": "REVLON One-Step Hair Dryer And Volumizer Hot Air Brush, Black, Packaging May Vary",
+      "price": 22.29,
+      "currency": "$",
+      "availability": "In Stock.",
+      "date": "2021-10-16T21:00:32.152Z",
+      "domain": "amazon.com",
+      "url": "https://www.amazon.com/Revlon-One-Step-Dryer-Volumizer-Brush/dp/B01LSUQSB0?ref_=Oct_DLandingS_D_a2b96935_60",
+      "minPrice": {
+        "minPriceDate": "2021-10-16T21:00:32.152Z",
+        "minPrice": 22.29,
+        "minPriceCurrency": "$"
+      }
+    }
+  ]
+}

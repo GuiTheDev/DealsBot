@@ -1,0 +1,21 @@
+{
+  "name": "amazonbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Guilherme Macedo",
+  "license": "ISC",
+  "dependencies": {
+    "atx-amazon-scraper": "^0.4.0",
+    "axios": "^0.23.0",
+    "discord.js": "^13.2.0",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "sleep": "^6.3.0",
+    "wintr": "^1.1.0",
+    "wintr-amazon-scraper": "^1.0.2"
+  }
+}
